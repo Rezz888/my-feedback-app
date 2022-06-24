@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid'
 
 const FeedbackContext = createContext()
 
@@ -18,7 +17,7 @@ export const FeedbackProvider = ( {children}) => {
     //Fetch Feedback
     const fetchFeedback = async () => {
         const response = await fetch(
-            'http://localhost:5000/feedback?_sort=id&_order=desc'
+            '/feedback?_sort=id&_order=desc'
         )
         const data = await response.json()
 
@@ -26,21 +25,36 @@ export const FeedbackProvider = ( {children}) => {
         setIsLoading(false)
     }
     // Add feedback
-    const addFeedback = (newFeedback)=> {
-    newFeedback.id = uuidv4()
-    setFeedback([newFeedback, ...feedback])
+    const addFeedback = async (newFeedback)=> {
+        const response = await fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+           body: JSON.stringify(newFeedback)
+        })
+        const data = await response.json()
+    setFeedback([data, ...feedback])
     }
     // Delete feedback
-    const deleteFeedback = (id)=> {
+    const deleteFeedback = async (id)=> {
     if (window.confirm('Are you sure you want to delete this')){
+        await fetch(`/feedback/${id}`, {method: 'DELETE'})
       setFeedback(feedback.filter((item)=> item.id !== id ))
     }
     }
     // Update feedback item
-    const updateFeedback = (id, updItem) => {
-      setFeedback(feedback.map((item)=> (item.id === id ? {...item, ...updItem } : item
-        
-      ))
+    const updateFeedback = async (id, updItem) => {
+        const response = await fetch(`/feedback/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updItem)
+        })
+        const data = await response.json()
+
+      setFeedback(feedback.map((item)=> (item.id === id ? {...item, ...data } : item))
       )
     }
     //Set item to be updated
