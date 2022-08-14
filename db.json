@@ -11,9 +11,19 @@
       "text": "This is feedback item 2 coming from the backend"
     },
     {
-      "text": "Hi this is a test",
-      "rating": 7,
+      "text": "Hi this is a test- updated it",
+      "rating": 2,
       "id": 4
+    },
+    {
+      "text": "this is another test",
+      "rating": 3,
+      "id": 5
+    },
+    {
+      "text": "hello resume your work",
+      "rating": 5,
+      "id": 7
     }
   ]
 }
