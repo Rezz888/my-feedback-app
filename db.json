@@ -24,6 +24,11 @@
       "text": "hello resume your work",
       "rating": 5,
       "id": 7
+    },
+    {
+      "text": "another one-",
+      "rating": 6,
+      "id": 8
     }
   ]
 }
